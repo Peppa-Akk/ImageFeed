@@ -20,17 +20,17 @@ final class ProfileViewController: UIViewController {
         addLabelOnView(nameLabel, with: "Екатерина Новикова",
                        by: [nameLabel.leadingAnchor.constraint(equalTo: avatarImageView.leadingAnchor),
                             nameLabel.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 8)],
-                       red: 255, green: 255, blue: 255)
+                       red: 255, green: 255, blue: 255, font: UIFont.boldSystemFont(ofSize: 23))
 
         addLabelOnView(loginNameLabel, with: "@ekaterina_nov",
                        by: [loginNameLabel.leadingAnchor.constraint(equalTo: avatarImageView.leadingAnchor),
                             loginNameLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 8)],
-                       red: 174, green: 175, blue: 180)
+                       red: 174, green: 175, blue: 180, font: UIFont.systemFont(ofSize: 13))
 
         addLabelOnView(descriptionLabel, with: "Hello, world!",
                        by: [descriptionLabel.leadingAnchor.constraint(equalTo: avatarImageView.leadingAnchor),
                             descriptionLabel.topAnchor.constraint(equalTo: loginNameLabel.bottomAnchor, constant: 8)],
-                       red: 255, green: 255, blue: 255)
+                       red: 255, green: 255, blue: 255, font: UIFont.systemFont(ofSize: 13))
     }
 }
 
@@ -64,8 +64,9 @@ extension ProfileViewController {
         ])
     }
     //MARK: Labels
-    func addLabelOnView(_ label: UILabel, with text: String, by arrayConstraints: [NSLayoutConstraint], red: CGFloat, green: CGFloat, blue: CGFloat) {
+    func addLabelOnView(_ label: UILabel, with text: String, by arrayConstraints: [NSLayoutConstraint], red: CGFloat, green: CGFloat, blue: CGFloat, font: UIFont) {
         label.text = text
+        label.font = font
         label.textColor = UIColor(red: red/255, green: green/255, blue: blue/255, alpha: 1)
         label.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(label)
