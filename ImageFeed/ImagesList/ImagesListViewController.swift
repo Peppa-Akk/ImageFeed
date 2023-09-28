@@ -16,11 +16,11 @@ final class ImagesListViewController: UIViewController {
     private let ShowSingleImageSegueIdentifier = "ShowSingleImage"
     private let photosName: [String] = Array(0..<20).map{ "\($0)"}
     private lazy var dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .long
-        formatter.timeStyle = .none
-        return formatter
-    }()
+            let formatter = DateFormatter()
+            formatter.dateFormat = "dd MMMM yyyy"
+            formatter.locale = Locale(identifier: "ru_RU")
+            return formatter
+        }()
     
     // MARK: - viewDidLoad
     override func viewDidLoad() {
@@ -43,14 +43,15 @@ final class ImagesListViewController: UIViewController {
     
     // MARK: - Override Functions
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == ShowSingleImageSegueIdentifier {
-            let viewController = segue.destination as! SingleImageViewController
-            let indexPath = sender as! IndexPath
-            let image = UIImage(named: photosName[indexPath.row])
-            viewController.image = image
-        } else {
+        guard segue.identifier == ShowSingleImageSegueIdentifier,
+              let viewController = segue.destination as? SingleImageViewController,
+              let indexPath = sender as? IndexPath  else {
             super.prepare(for: segue, sender: sender)
+            return
         }
+        let imageName = photosName[indexPath.row]
+        let image = UIImage(named: "\(imageName)_full_size") ?? UIImage(named: imageName)
+        viewController.image = image
     }
 }
 
