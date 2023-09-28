@@ -19,17 +19,20 @@ final class ProfileViewController: UIViewController {
         addImageViewOnView(avatarImageView)
         addLabelOnView(nameLabel, with: "Екатерина Новикова",
                        by: [nameLabel.leadingAnchor.constraint(equalTo: avatarImageView.leadingAnchor),
-                            nameLabel.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 8)],
+                            nameLabel.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 8),
+                            nameLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)],
                        red: 255, green: 255, blue: 255, font: UIFont.boldSystemFont(ofSize: 23))
 
         addLabelOnView(loginNameLabel, with: "@ekaterina_nov",
                        by: [loginNameLabel.leadingAnchor.constraint(equalTo: avatarImageView.leadingAnchor),
-                            loginNameLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 8)],
+                            loginNameLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 8),
+                            loginNameLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)],
                        red: 174, green: 175, blue: 180, font: UIFont.systemFont(ofSize: 13))
 
         addLabelOnView(descriptionLabel, with: "Hello, world!",
                        by: [descriptionLabel.leadingAnchor.constraint(equalTo: avatarImageView.leadingAnchor),
-                            descriptionLabel.topAnchor.constraint(equalTo: loginNameLabel.bottomAnchor, constant: 8)],
+                            descriptionLabel.topAnchor.constraint(equalTo: loginNameLabel.bottomAnchor, constant: 8),
+                            descriptionLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)],
                        red: 255, green: 255, blue: 255, font: UIFont.systemFont(ofSize: 13))
     }
 }
@@ -52,7 +55,8 @@ extension ProfileViewController {
     //MARK: ImageView
     func addImageViewOnView(_ imageView: UIImageView) {
         imageView.image = UIImage(named: "avatar.png")
-
+        imageView.layer.cornerRadius = imageView.frame.size.width / 2
+        imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(imageView)
         
@@ -67,6 +71,7 @@ extension ProfileViewController {
     func addLabelOnView(_ label: UILabel, with text: String, by arrayConstraints: [NSLayoutConstraint], red: CGFloat, green: CGFloat, blue: CGFloat, font: UIFont) {
         label.text = text
         label.font = font
+        label.numberOfLines = 0
         label.textColor = UIColor(red: red/255, green: green/255, blue: blue/255, alpha: 1)
         label.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(label)
