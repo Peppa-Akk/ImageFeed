@@ -17,8 +17,11 @@
 		4D9552032AC1996100670CEB /* ImageFeedUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9552022AC1996100670CEB /* ImageFeedUITests.swift */; };
 		4D9552052AC1996100670CEB /* ImageFeedUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9552042AC1996100670CEB /* ImageFeedUITestsLaunchTests.swift */; };
 		4D95524E2AC2357200670CEB /* ImagesListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D95524D2AC2357200670CEB /* ImagesListCell.swift */; };
+		4DB898B22AD4890200A74EA8 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB898B12AD4890200A74EA8 /* Constants.swift */; };
+		4DB898B72AD495CF00A74EA8 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB898B62AD495CF00A74EA8 /* AuthViewController.swift */; };
 		4DB951E22AC2D85A007505E2 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB951E12AC2D85A007505E2 /* ProfileViewController.swift */; };
 		4DB951E42AC2FD50007505E2 /* SingleImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB951E32AC2FD50007505E2 /* SingleImageViewController.swift */; };
+		4DECCB572AD53588003C4146 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DECCB562AD53588003C4146 /* WebViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,8 +56,11 @@
 		4D9552022AC1996100670CEB /* ImageFeedUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFeedUITests.swift; sourceTree = "<group>"; };
 		4D9552042AC1996100670CEB /* ImageFeedUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFeedUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		4D95524D2AC2357200670CEB /* ImagesListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListCell.swift; sourceTree = "<group>"; };
+		4DB898B12AD4890200A74EA8 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		4DB898B62AD495CF00A74EA8 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
 		4DB951E12AC2D85A007505E2 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		4DB951E32AC2FD50007505E2 /* SingleImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleImageViewController.swift; sourceTree = "<group>"; };
+		4DECCB562AD53588003C4146 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +111,7 @@
 		4D9551E02AC1995E00670CEB /* ImageFeed */ = {
 			isa = PBXGroup;
 			children = (
+				4DB898B32AD4955400A74EA8 /* Auth */,
 				4DB951E02AC2D7EB007505E2 /* Profile */,
 				4D95524F2AC2359C00670CEB /* ImagesList */,
 				4D9551E12AC1995E00670CEB /* AppDelegate.swift */,
@@ -113,6 +120,7 @@
 				4D9551EA2AC1996000670CEB /* Assets.xcassets */,
 				4D9551EC2AC1996000670CEB /* LaunchScreen.storyboard */,
 				4D9551EF2AC1996000670CEB /* Info.plist */,
+				4DB898B12AD4890200A74EA8 /* Constants.swift */,
 			);
 			path = ImageFeed;
 			sourceTree = "<group>";
@@ -142,6 +150,15 @@
 				4DB951E32AC2FD50007505E2 /* SingleImageViewController.swift */,
 			);
 			path = ImagesList;
+			sourceTree = "<group>";
+		};
+		4DB898B32AD4955400A74EA8 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				4DB898B62AD495CF00A74EA8 /* AuthViewController.swift */,
+				4DECCB562AD53588003C4146 /* WebViewController.swift */,
+			);
+			path = Auth;
 			sourceTree = "<group>";
 		};
 		4DB951E02AC2D7EB007505E2 /* Profile */ = {
@@ -284,8 +301,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				4D9551E62AC1995E00670CEB /* ImagesListViewController.swift in Sources */,
+				4DECCB572AD53588003C4146 /* WebViewController.swift in Sources */,
 				4D95524E2AC2357200670CEB /* ImagesListCell.swift in Sources */,
+				4DB898B22AD4890200A74EA8 /* Constants.swift in Sources */,
 				4DB951E22AC2D85A007505E2 /* ProfileViewController.swift in Sources */,
+				4DB898B72AD495CF00A74EA8 /* AuthViewController.swift in Sources */,
 				4D9551E22AC1995E00670CEB /* AppDelegate.swift in Sources */,
 				4DB951E42AC2FD50007505E2 /* SingleImageViewController.swift in Sources */,
 				4D9551E42AC1995E00670CEB /* SceneDelegate.swift in Sources */,
