@@ -1,4 +1,3 @@
-import Foundation
 import UIKit
 
 final class ProfileViewController: UIViewController {
@@ -79,33 +78,3 @@ extension ProfileViewController {
         NSLayoutConstraint.activate(arrayConstraints)
     }
 }
-
-
-//        nameLabel.text = "Екатерина Новикова"
-//        nameLabel.textColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1)
-//        nameLabel.translatesAutoresizingMaskIntoConstraints = false
-//        view.addSubview(nameLabel)
-//
-//        NSLayoutConstraint.activate([
-//            nameLabel.leadingAnchor.constraint(equalTo: avatarImageView.leadingAnchor),
-//            nameLabel.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 8)
-//        ])
-
-//        loginNameLabel.text = "@ekaterina_nov"
-//        loginNameLabel.textColor = UIColor(red: 174/255, green: 175/255, blue: 180/255, alpha: 1)
-//        loginNameLabel.translatesAutoresizingMaskIntoConstraints = false
-//        view.addSubview(loginNameLabel)
-//
-//        NSLayoutConstraint.activate([
-//            loginNameLabel.leadingAnchor.constraint(equalTo: avatarImageView.leadingAnchor),
-//            loginNameLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 8)
-//        ])
-
-//        descriptionLabel.text = "Hello, world!"
-//        descriptionLabel.textColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1)
-//        descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
-//        view.addSubview(descriptionLabel)
-//        NSLayoutConstraint.activate([
-//            descriptionLabel.leadingAnchor.constraint(equalTo: avatarImageView.leadingAnchor),
-//            descriptionLabel.topAnchor.constraint(equalTo: loginNameLabel.bottomAnchor, constant: 8)
-//        ])
