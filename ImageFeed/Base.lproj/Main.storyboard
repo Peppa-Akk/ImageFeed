@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="udx-VW-dzD">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="udx-VW-dzD">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -60,7 +60,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wX4-XI-EzI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2052" y="317"/>
+            <point key="canvasLocation" x="1015" y="-868"/>
         </scene>
         <!--Web View View Controller-->
         <scene sceneID="gy8-Iv-Jgq">
@@ -90,6 +90,10 @@
                                     <action selector="didTapBackButton:" destination="Kl5-gC-65o" eventType="touchUpInside" id="WVM-yc-rvd"/>
                                 </connections>
                             </button>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="f53-Q4-UZE">
+                                <rect key="frame" x="0.0" y="35" width="375" height="4"/>
+                                <color key="progressTintColor" red="0.10196078431372549" green="0.10588235294117647" blue="0.13333333333333333" alpha="1" colorSpace="calibratedRGB"/>
+                            </progressView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="iCO-9l-8no"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -97,18 +101,37 @@
                             <constraint firstItem="UwV-Ae-89K" firstAttribute="top" secondItem="YxR-La-p63" secondAttribute="top" id="DUs-t3-XJY"/>
                             <constraint firstItem="UwV-Ae-89K" firstAttribute="leading" secondItem="YxR-La-p63" secondAttribute="leading" id="IgV-Cp-CKg"/>
                             <constraint firstAttribute="trailing" secondItem="UwV-Ae-89K" secondAttribute="trailing" id="JFe-1C-Q2Z"/>
+                            <constraint firstItem="f53-Q4-UZE" firstAttribute="top" secondItem="jAt-eg-hJz" secondAttribute="bottom" id="Sr3-BP-2ub"/>
                             <constraint firstItem="jAt-eg-hJz" firstAttribute="top" secondItem="iCO-9l-8no" secondAttribute="top" constant="11" id="UQ3-60-X3f"/>
+                            <constraint firstAttribute="trailing" secondItem="f53-Q4-UZE" secondAttribute="trailing" id="VAe-eV-thP"/>
+                            <constraint firstItem="f53-Q4-UZE" firstAttribute="leading" secondItem="YxR-La-p63" secondAttribute="leading" id="VOO-2Y-DoB"/>
                             <constraint firstAttribute="bottom" secondItem="UwV-Ae-89K" secondAttribute="bottom" id="cvE-ly-22I"/>
                             <constraint firstItem="jAt-eg-hJz" firstAttribute="leading" secondItem="iCO-9l-8no" secondAttribute="leading" constant="8" id="h3g-h0-LTl"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="progressView" destination="f53-Q4-UZE" id="kdJ-DM-88A"/>
                         <outlet property="webView" destination="UwV-Ae-89K" id="qoj-ew-AsN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WuS-oH-4cF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1134" y="317"/>
+            <point key="canvasLocation" x="1959" y="-868"/>
+        </scene>
+        <!--SplashViewController-->
+        <scene sceneID="q5x-TS-0bU">
+            <objects>
+                <viewController id="cf7-NS-9SD" userLabel="SplashViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="0XU-od-IIV">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="o3z-V8-try"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FBP-iK-UlH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1538" y="-412"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="cud-bb-YTn">
@@ -133,7 +156,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rG0-6o-ggf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-132" y="316.99507389162562"/>
+            <point key="canvasLocation" x="-132" y="55"/>
         </scene>
         <!--ImageList-->
         <scene sceneID="tne-QT-ifu">
@@ -224,7 +247,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1015.2" y="-41.379310344827587"/>
+            <point key="canvasLocation" x="1015" y="-174"/>
         </scene>
         <!--Profile View Controller-->
         <scene sceneID="MIx-aP-iEX">
@@ -240,7 +263,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fGf-2U-mhP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1015.2" y="642.85714285714289"/>
+            <point key="canvasLocation" x="1014" y="507"/>
         </scene>
         <!--Single Image View Controller-->
         <scene sceneID="Cm4-QB-5Sa">
@@ -312,7 +335,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wM2-CP-RAn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1959.2" y="-42.118226600985224"/>
+            <point key="canvasLocation" x="1958" y="-174"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Jm6-l5-3iF">
@@ -330,7 +353,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="awq-9E-nw9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2994" y="317"/>
+            <point key="canvasLocation" x="-132" y="-868"/>
         </scene>
     </scenes>
     <resources>
