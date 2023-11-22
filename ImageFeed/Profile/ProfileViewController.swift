@@ -34,6 +34,15 @@ final class ProfileViewController: UIViewController {
                             descriptionLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)],
                        red: 255, green: 255, blue: 255, font: UIFont.systemFont(ofSize: 13))
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        guard let profile = ProfileService.shared.profile else { return }
+        
+        self.nameLabel.text = profile.name
+        self.descriptionLabel.text = profile.bio
+        self.loginNameLabel.text = profile.loginName
+    }
 }
 
 // MARK: - Extension UI-elements in code

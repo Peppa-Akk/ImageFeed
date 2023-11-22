@@ -6,8 +6,11 @@ final class SplashViewController: UIViewController {
     // MARK: - Variables
     private let showAuthenticationScreenSegueIdentifier = "ShowAuthenticationScreen"
     
-    private let oauth2Service = OAuth2Service()
-    private let oauth2TokenStorage = OAuth2TokenStorage()
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        .lightContent
+    }
+    
+    private var alertPresenter: AlertPresenter?
     
     // MARK: - override funcs
     override func viewWillAppear(_ animated: Bool) {
@@ -18,15 +21,14 @@ final class SplashViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        if let token = oauth2TokenStorage.token {
-            switchToTabBarController()
+        if OAuth2Service.shared.isAuthenticated {
+            UIBlockingProgressHUD.show()
+            fetchProfile {
+                UIBlockingProgressHUD.dismiss()
+            }
         } else {
             performSegue(withIdentifier: showAuthenticationScreenSegueIdentifier, sender: nil)
         }
-    }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        .lightContent
     }
     
     //MARK: - funcs
@@ -39,7 +41,17 @@ final class SplashViewController: UIViewController {
     }
 }
 
-// MARK: - extension SplashViewController
+// MARK: - extension showAlert func
+extension SplashViewController {
+    private func showAlert(error: Error) {
+        alertPresenter?.showAlert(tittle: "Что-то пошло не так :(",
+                                  message: "Не удалось войти в систему, \(error.localizedDescription)") {
+            self.performSegue(withIdentifier: self.showAuthenticationScreenSegueIdentifier, sender: nil)
+        }
+    }
+}
+
+// MARK: - extension override prepare
 extension SplashViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == showAuthenticationScreenSegueIdentifier {
@@ -54,27 +66,45 @@ extension SplashViewController {
     }
 }
 
+// MARK: - extension funcs fetchAuthToken and fetchProfile
+extension SplashViewController {
+    private func fetchAuthToken(_ code: String) {
+        OAuth2Service.shared.fetchAuthToken(code: code) { [weak self] authResult in
+            guard let self = self else { return }
+            switch authResult {
+            case .success:
+                self.fetchProfile {
+                    UIBlockingProgressHUD.dismiss()
+                }
+            case .failure(let error):
+                self.showAlert(error: error)
+                UIBlockingProgressHUD.dismiss()
+                break
+            }
+        }
+    }
+    
+    private func fetchProfile(completion: @escaping () -> Void) {
+        ProfileService.shared.fetchProfile { [weak self] profileResult in
+            guard let self = self else { return }
+            switch profileResult {
+            case .success:
+                self.switchToTabBarController()
+            case .failure(let error):
+                self.showAlert(error: error)
+            }
+            completion()
+        }
+    }
+}
+
 // MARK: - extension AuthViewControllerDelegate
 extension SplashViewController: AuthViewControllerDelegate {
     func authViewController(_ vc: AuthViewController, didAuthenticateWithCode code: String) {
         UIBlockingProgressHUD.show()
-        dismiss(animated: true) { [weak self] in
+        dismiss(animated: false) { [weak self] in
             guard let self = self else { return }
             self.fetchAuthToken(code)
-        }
-    }
-    
-    private func fetchAuthToken(_ code: String) {
-        oauth2Service.fetchAuthToken(code: code) { [weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case .success:
-                self.switchToTabBarController()
-                UIBlockingProgressHUD.dismiss()
-            case .failure:
-                UIBlockingProgressHUD.dismiss()
-                break
-            }
         }
     }
 }
