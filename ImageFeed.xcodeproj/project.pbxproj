@@ -24,6 +24,8 @@
 		4DB898B72AD495CF00A74EA8 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB898B62AD495CF00A74EA8 /* AuthViewController.swift */; };
 		4DB951E22AC2D85A007505E2 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB951E12AC2D85A007505E2 /* ProfileViewController.swift */; };
 		4DB951E42AC2FD50007505E2 /* SingleImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB951E32AC2FD50007505E2 /* SingleImageViewController.swift */; };
+		4DCB1E222B0FDC1100EE94C6 /* ImageListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DCB1E212B0FDC1100EE94C6 /* ImageListService.swift */; };
+		4DCB1E242B0FDCA800EE94C6 /* PhotosModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DCB1E232B0FDCA800EE94C6 /* PhotosModel.swift */; };
 		4DD287DB2B0D766100886D00 /* UIBlockingProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD287DA2B0D766100886D00 /* UIBlockingProgressHUD.swift */; };
 		4DD287E12B0E6BF500886D00 /* ProfileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD287E02B0E6BF500886D00 /* ProfileService.swift */; };
 		4DD287E42B0E6E6C00886D00 /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD287E32B0E6E6C00886D00 /* ProfileModel.swift */; };
@@ -78,6 +80,8 @@
 		4DB898B62AD495CF00A74EA8 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
 		4DB951E12AC2D85A007505E2 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		4DB951E32AC2FD50007505E2 /* SingleImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleImageViewController.swift; sourceTree = "<group>"; };
+		4DCB1E212B0FDC1100EE94C6 /* ImageListService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageListService.swift; sourceTree = "<group>"; };
+		4DCB1E232B0FDCA800EE94C6 /* PhotosModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosModel.swift; sourceTree = "<group>"; };
 		4DD287DA2B0D766100886D00 /* UIBlockingProgressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBlockingProgressHUD.swift; sourceTree = "<group>"; };
 		4DD287E02B0E6BF500886D00 /* ProfileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileService.swift; sourceTree = "<group>"; };
 		4DD287E32B0E6E6C00886D00 /* ProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
@@ -219,6 +223,7 @@
 				4D3A88692B0B927A0048BFE4 /* OAuth2TokenStorage.swift */,
 				4DD287E02B0E6BF500886D00 /* ProfileService.swift */,
 				4DFAFC1C2B0ECE7C0074A128 /* ProfileImageService.swift */,
+				4DCB1E212B0FDC1100EE94C6 /* ImageListService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -239,6 +244,7 @@
 			isa = PBXGroup;
 			children = (
 				4DD287E32B0E6E6C00886D00 /* ProfileModel.swift */,
+				4DCB1E232B0FDCA800EE94C6 /* PhotosModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -404,11 +410,13 @@
 				4D9551E62AC1995E00670CEB /* ImagesListViewController.swift in Sources */,
 				4DECCB572AD53588003C4146 /* WebViewController.swift in Sources */,
 				4D95524E2AC2357200670CEB /* ImagesListCell.swift in Sources */,
+				4DCB1E242B0FDCA800EE94C6 /* PhotosModel.swift in Sources */,
 				4D3A886D2B0CC3890048BFE4 /* SplashViewController.swift in Sources */,
 				4DB898B22AD4890200A74EA8 /* Constants.swift in Sources */,
 				4D3A886A2B0B927A0048BFE4 /* OAuth2TokenStorage.swift in Sources */,
 				4DD287DB2B0D766100886D00 /* UIBlockingProgressHUD.swift in Sources */,
 				4DB951E22AC2D85A007505E2 /* ProfileViewController.swift in Sources */,
+				4DCB1E222B0FDC1100EE94C6 /* ImageListService.swift in Sources */,
 				4DD287E62B0E8A5E00886D00 /* URLRequest+Extension.swift in Sources */,
 				4DB898B72AD495CF00A74EA8 /* AuthViewController.swift in Sources */,
 				4D9551E22AC1995E00670CEB /* AppDelegate.swift in Sources */,
