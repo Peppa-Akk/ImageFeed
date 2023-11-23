@@ -9,10 +9,17 @@ final class SplashViewController: UIViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle {
         .lightContent
     }
+    private var unsplashLogoImage = UIImageView()
     
     private var alertPresenter: AlertPresenter?
     
     // MARK: - override funcs
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        layout()
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setNeedsStatusBarAppearanceUpdate()
@@ -27,17 +34,45 @@ final class SplashViewController: UIViewController {
                 UIBlockingProgressHUD.dismiss()
             }
         } else {
-            performSegue(withIdentifier: showAuthenticationScreenSegueIdentifier, sender: nil)
+            switchToAuthViewController()
         }
     }
     
     //MARK: - funcs
+    private func layout() {
+        view.backgroundColor = UIColor(red: 26/255, green: 27/255, blue: 34/255, alpha: 1)
+        unsplashLogoImage.image = UIImage(named: "logo")
+        view.addSubview(unsplashLogoImage)
+        
+        NSLayoutConstraint.activate([
+            unsplashLogoImage.widthAnchor.constraint(equalToConstant: 75),
+            unsplashLogoImage.heightAnchor.constraint(equalToConstant: 77.68),
+            unsplashLogoImage.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor, constant: 0),
+            unsplashLogoImage.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor, constant: 0)
+        ])
+    }
+}
+
+// MARK: - extension switch VC funcs
+extension SplashViewController {
     private func switchToTabBarController() {
         guard
             let window = UIApplication.shared.windows.first else { fatalError("Failed Congigaruration!") }
         let tabBarController = UIStoryboard(name: "Main", bundle: .main)
-            .instantiateViewController(identifier: "TabBarViewController")
+            .instantiateViewController(identifier: "TabBarVC")
         window.rootViewController = tabBarController
+    }
+    
+    private func switchToAuthViewController() {
+        let storyboard = UIStoryboard(
+            name: "Main",
+            bundle: .main
+        )
+        let viewController = storyboard.instantiateViewController(withIdentifier: "AuthViewController")
+        guard let viewController = viewController as? AuthViewController else { return }
+        viewController.delegate = self
+        viewController.modalPresentationStyle = .fullScreen
+        present(viewController, animated: false)
     }
 }
 
@@ -51,24 +86,10 @@ extension SplashViewController {
     }
 }
 
-// MARK: - extension override prepare
-extension SplashViewController {
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == showAuthenticationScreenSegueIdentifier {
-            guard
-                let navigationController = segue.destination as? UINavigationController,
-                let viewController = navigationController.viewControllers.first as? AuthViewController
-            else { fatalError("Failed to prepare for \(showAuthenticationScreenSegueIdentifier)") }
-            viewController.delegate = self
-        } else {
-            super.prepare(for: segue, sender: sender)
-        }
-    }
-}
-
 // MARK: - extension funcs fetchAuthToken, fetchProfile and fetchProfileImage
 extension SplashViewController {
     private func fetchAuthToken(_ code: String) {
+        UIBlockingProgressHUD.show()
         OAuth2Service.shared.fetchAuthToken(code: code) { [weak self] authResult in
             guard let self = self else { return }
             switch authResult {
@@ -77,8 +98,8 @@ extension SplashViewController {
                     UIBlockingProgressHUD.dismiss()
                 }
             case .failure(let error):
-                self.showAlert(error: error)
                 UIBlockingProgressHUD.dismiss()
+                self.showAlert(error: error)
                 break
             }
         }
@@ -90,7 +111,9 @@ extension SplashViewController {
             switch profileResult {
             case .success(let profile):
                 let profileUsername = profile.username
-                self.fetchProfileImage(username: profileUsername)
+                self.fetchProfileImage(username: profileUsername) {
+                    UIBlockingProgressHUD.dismiss()
+                }
             case .failure(let error):
                 self.showAlert(error: error)
             }
@@ -98,7 +121,7 @@ extension SplashViewController {
         }
     }
     
-    private func fetchProfileImage(username: String) {
+    private func fetchProfileImage(username: String, completion: @escaping () -> Void) {
         ProfileImageService.shared.fetchProfileImageURL(userName: username) { [weak self] profileResult in
             guard let self = self else { return }
             switch profileResult {
@@ -107,6 +130,7 @@ extension SplashViewController {
             case .failure(let error):
                 self.showAlert(error: error)
             }
+            completion()
         }
     }
 }
@@ -114,8 +138,7 @@ extension SplashViewController {
 // MARK: - extension AuthViewControllerDelegate
 extension SplashViewController: AuthViewControllerDelegate {
     func authViewController(_ vc: AuthViewController, didAuthenticateWithCode code: String) {
-        UIBlockingProgressHUD.show()
-        dismiss(animated: false) { [weak self] in
+        dismiss(animated: true) { [weak self] in
             guard let self = self else { return }
             self.fetchAuthToken(code)
         }

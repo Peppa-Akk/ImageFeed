@@ -84,7 +84,7 @@ extension ProfileViewController {
     //MARK: ImageView
     func addImageViewOnView(_ imageView: UIImageView) {
         imageView.image = placeholderImage
-        imageView.layer.cornerRadius = imageView.frame.size.width / 2
+        imageView.layer.cornerRadius = 35
         imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(imageView)
@@ -116,6 +116,8 @@ extension ProfileViewController {
 // MARK: Add UI-Elements on View
 extension ProfileViewController {
     func layout() {
+        view.backgroundColor = UIColor(red: 26/255, green: 27/255, blue: 34/255, alpha: 1)
+        
         addButtonOnView(logoutButton)
         addImageViewOnView(avatarImageView)
         addLabelOnView(nameLabel, with: "Екатерина Новикова",
