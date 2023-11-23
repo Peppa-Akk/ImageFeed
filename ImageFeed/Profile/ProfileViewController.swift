@@ -1,44 +1,65 @@
 import UIKit
+import Kingfisher
 
 final class ProfileViewController: UIViewController {
     
-    // MARK: - Varables
+    // MARK: - UI Varables
     private var avatarImageView = UIImageView()
     private var nameLabel = UILabel()
     private var loginNameLabel = UILabel()
     private var descriptionLabel = UILabel()
     private var logoutButton = UIButton()
     
+    // MARK: - Variables
+    private let placeholderImage = UIImage(named: "person.crop.circle.fill")
+    
+    private var profileImageServiceObserver: NSObjectProtocol?
+    private let profileImageService = ProfileImageService.shared
+    
     // MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
+        layout()
         
-        // MARK: Add UI-Elements on View
-        addButtonOnView(logoutButton)
-        addImageViewOnView(avatarImageView)
-        addLabelOnView(nameLabel, with: "Екатерина Новикова",
-                       by: [nameLabel.leadingAnchor.constraint(equalTo: avatarImageView.leadingAnchor),
-                            nameLabel.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 8),
-                            nameLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)],
-                       red: 255, green: 255, blue: 255, font: UIFont.boldSystemFont(ofSize: 23))
-
-        addLabelOnView(loginNameLabel, with: "@ekaterina_nov",
-                       by: [loginNameLabel.leadingAnchor.constraint(equalTo: avatarImageView.leadingAnchor),
-                            loginNameLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 8),
-                            loginNameLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)],
-                       red: 174, green: 175, blue: 180, font: UIFont.systemFont(ofSize: 13))
-
-        addLabelOnView(descriptionLabel, with: "Hello, world!",
-                       by: [descriptionLabel.leadingAnchor.constraint(equalTo: avatarImageView.leadingAnchor),
-                            descriptionLabel.topAnchor.constraint(equalTo: loginNameLabel.bottomAnchor, constant: 8),
-                            descriptionLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)],
-                       red: 255, green: 255, blue: 255, font: UIFont.systemFont(ofSize: 13))
+        if let url = profileImageService.avatarURL {
+            updateAvatar(url: url)
+        }
+        
+        profileImageServiceObserver = NotificationCenter.default.addObserver(
+            forName: ProfileImageService.didChangeNotification,
+            object: nil,
+            queue: .main,
+            using: { [weak self] notification in
+                self?.updateAvatar(notification: notification)
+            })
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         guard let profile = ProfileService.shared.profile else { return }
         
+        updateProfileDetails(profile: profile)
+    }
+    
+    @objc
+    private func updateAvatar(notification: Notification) {
+        guard
+            isViewLoaded,
+            let userInfo = notification.userInfo,
+            let profileImageURL = userInfo["URL"] as? String,
+            let url = URL(string: profileImageURL)
+        else { return }
+        
+        updateAvatar(url: url)
+    }
+    
+    private func updateAvatar(url: URL) {
+        avatarImageView.kf.indicatorType = .activity
+        let processor = RoundCornerImageProcessor(cornerRadius: 61)
+        avatarImageView.kf.setImage(with: url, placeholder: placeholderImage, options: [.processor(processor)])
+    }
+    
+    private func updateProfileDetails(profile: Profile) {
         self.nameLabel.text = profile.name
         self.descriptionLabel.text = profile.bio
         self.loginNameLabel.text = profile.loginName
@@ -62,7 +83,7 @@ extension ProfileViewController {
     }
     //MARK: ImageView
     func addImageViewOnView(_ imageView: UIImageView) {
-        imageView.image = UIImage(named: "avatar.png")
+        imageView.image = placeholderImage
         imageView.layer.cornerRadius = imageView.frame.size.width / 2
         imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -76,7 +97,11 @@ extension ProfileViewController {
         ])
     }
     //MARK: Labels
-    func addLabelOnView(_ label: UILabel, with text: String, by arrayConstraints: [NSLayoutConstraint], red: CGFloat, green: CGFloat, blue: CGFloat, font: UIFont) {
+    func addLabelOnView(_ label: UILabel, 
+                        with text: String,
+                        by arrayConstraints: [NSLayoutConstraint],
+                        red: CGFloat, green: CGFloat, blue:
+                        CGFloat, font: UIFont) {
         label.text = text
         label.font = font
         label.numberOfLines = 0
@@ -85,5 +110,30 @@ extension ProfileViewController {
         view.addSubview(label)
         
         NSLayoutConstraint.activate(arrayConstraints)
+    }
+}
+
+// MARK: Add UI-Elements on View
+extension ProfileViewController {
+    func layout() {
+        addButtonOnView(logoutButton)
+        addImageViewOnView(avatarImageView)
+        addLabelOnView(nameLabel, with: "Екатерина Новикова",
+                       by: [nameLabel.leadingAnchor.constraint(equalTo: avatarImageView.leadingAnchor),
+                            nameLabel.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 8),
+                            nameLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)],
+                       red: 255, green: 255, blue: 255, font: UIFont.boldSystemFont(ofSize: 23))
+
+        addLabelOnView(loginNameLabel, with: "@ekaterina_nov",
+                       by: [loginNameLabel.leadingAnchor.constraint(equalTo: avatarImageView.leadingAnchor),
+                            loginNameLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 8),
+                            loginNameLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)],
+                       red: 174, green: 175, blue: 180, font: UIFont.systemFont(ofSize: 13))
+
+        addLabelOnView(descriptionLabel, with: "Hello, world!",
+                       by: [descriptionLabel.leadingAnchor.constraint(equalTo: avatarImageView.leadingAnchor),
+                            descriptionLabel.topAnchor.constraint(equalTo: loginNameLabel.bottomAnchor, constant: 8),
+                            descriptionLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)],
+                       red: 255, green: 255, blue: 255, font: UIFont.systemFont(ofSize: 13))
     }
 }

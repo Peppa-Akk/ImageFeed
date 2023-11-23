@@ -66,7 +66,7 @@ extension SplashViewController {
     }
 }
 
-// MARK: - extension funcs fetchAuthToken and fetchProfile
+// MARK: - extension funcs fetchAuthToken, fetchProfile and fetchProfileImage
 extension SplashViewController {
     private func fetchAuthToken(_ code: String) {
         OAuth2Service.shared.fetchAuthToken(code: code) { [weak self] authResult in
@@ -88,12 +88,25 @@ extension SplashViewController {
         ProfileService.shared.fetchProfile { [weak self] profileResult in
             guard let self = self else { return }
             switch profileResult {
+            case .success(let profile):
+                let profileUsername = profile.username
+                self.fetchProfileImage(username: profileUsername)
+            case .failure(let error):
+                self.showAlert(error: error)
+            }
+            completion()
+        }
+    }
+    
+    private func fetchProfileImage(username: String) {
+        ProfileImageService.shared.fetchProfileImageURL(userName: username) { [weak self] profileResult in
+            guard let self = self else { return }
+            switch profileResult {
             case .success:
                 self.switchToTabBarController()
             case .failure(let error):
                 self.showAlert(error: error)
             }
-            completion()
         }
     }
 }
