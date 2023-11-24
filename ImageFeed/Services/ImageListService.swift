@@ -12,27 +12,29 @@ final class ImageListService {
     private let imagesPerPage = 10
 //    private var 
     
-    private func fetchPhotoNextPage() {
+    func fetchPhotoNextPage() {
         assert(Thread.isMainThread)
         
         currentTask?.cancel()
         
-        guard let request = makeRequest() else {
+        let nextPage = lastLoadedPage == nil ? 1 : lastLoadedPage! + 1
+        
+        guard let request = makeRequest(with: nextPage) else {
             assertionFailure("Invalid request")
             return
         }
         
         let session = URLSession.shared
         let task = session.objectTast(for: request) {
-            [weak self] (result: Result<PhotoResult, Error>) in
+            [weak self] (result: Result<[PhotoResult], Error>) in
             guard let self = self else { return }
-            
+            self.currentTask = nil
             switch result {
-            case .success(let body):
-                
-                // From PhotoResult to Photo and append to photos [Photo]
-                
-                self.currentTask = nil
+            case .success(let photoResult):
+                for photo in photoResult {
+                    photos.append(convert(by: photo))
+                }
+                self.lastLoadedPage = nextPage
                 
                 NotificationCenter.default.post(
                     name: ProfileImageService.didChangeNotification,
@@ -42,19 +44,34 @@ final class ImageListService {
             case .failure:
                 break
             }
-            self.currentTask = nil
         }
         
         self.currentTask = task
         task.resume()
     }
     
-    private func makeRequest() -> URLRequest? {
+    private func makeRequest(with page: Int) -> URLRequest? {
         urlBuilder.makeHTTPRequest(
             path: "/photos"
-            + "?page=\(lastLoadedPage)" // ??
+            + "?page=\(page)" // ??
             + "&&per_page\(imagesPerPage)",
             httpMetod: "GET",
             baseURL: "https://api.unsplash.com")
+    }
+}
+
+extension ImageListService {
+    private func convert(by photoResult: PhotoResult) -> Photo {
+        return Photo(
+            id: photoResult.id,
+            size: CGSize(width: Double(photoResult.width), height: Double(photoResult.height)),
+            createdAt: ISO8601DateFormatter().date(
+                from: photoResult.createdAt ?? DateFormatter().string(from: Date())
+            ),
+            welcomeDescription: photoResult.descriptiom,
+            thumbImageURL: photoResult.urls.thumb,
+            largeImageURL: photoResult.urls.full,
+            isLiked: photoResult.likedByUser
+        )
     }
 }

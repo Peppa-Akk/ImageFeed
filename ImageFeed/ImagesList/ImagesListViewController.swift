@@ -13,6 +13,7 @@ final class ImagesListViewController: UIViewController {
     @IBOutlet private var tableView: UITableView!
     
     // MARK: - Variables
+    private let imageListService = ImageListService.shared
     private let ShowSingleImageSegueIdentifier = "ShowSingleImage"
     private let photosName: [String] = Array(0..<20).map{ "\($0)"}
     private lazy var dateFormatter: DateFormatter = {
@@ -89,6 +90,12 @@ extension ImagesListViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        // TODO: some
+        if (indexPath.row + 1) % 10 == 0 {
+            print("kek")
+            imageListService.fetchPhotoNextPage()
+        }
+        print(indexPath.row)
+        print("___________________________")
+        print(imageListService.photos.count)
     }
 }
