@@ -121,7 +121,6 @@
         <!--Tab Bar Controller-->
         <scene sceneID="cud-bb-YTn">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="rG0-6o-ggf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <tabBarController storyboardIdentifier="TabBarVC" id="gLv-2s-9Tk" customClass="TabBarController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="IzL-nR-jbT">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="49"/>
@@ -136,6 +135,7 @@
                         </tabBarAppearance>
                     </tabBar>
                 </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rG0-6o-ggf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-132" y="55"/>
         </scene>
@@ -181,6 +181,9 @@
                                                     </constraints>
                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                     <state key="normal" image="like_button_on"/>
+                                                    <connections>
+                                                        <action selector="likeButtonClicked:" destination="VIZ-pM-qwo" eventType="touchUpInside" id="DOv-B0-I9G"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -200,6 +203,7 @@
                                         <connections>
                                             <outlet property="cellImage" destination="7E1-cb-wKv" id="5Pg-Hb-lMJ"/>
                                             <outlet property="dateLabel" destination="fSF-kR-RWp" id="2PE-6j-rM7"/>
+                                            <outlet property="gradientView" destination="2F2-pt-sQG" id="tIB-gi-M9T"/>
                                             <outlet property="likeButton" destination="Cmo-0A-qeZ" id="pUs-jw-1Kg"/>
                                         </connections>
                                     </tableViewCell>

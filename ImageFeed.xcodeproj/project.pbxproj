@@ -10,6 +10,7 @@
 		4D3A88682B0B91C20048BFE4 /* OAuth2Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D3A88672B0B91C20048BFE4 /* OAuth2Service.swift */; };
 		4D3A886A2B0B927A0048BFE4 /* OAuth2TokenStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D3A88692B0B927A0048BFE4 /* OAuth2TokenStorage.swift */; };
 		4D3A886D2B0CC3890048BFE4 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D3A886C2B0CC3890048BFE4 /* SplashViewController.swift */; };
+		4D5740042B13855200398E36 /* CookieService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5740032B13855200398E36 /* CookieService.swift */; };
 		4D9551E22AC1995E00670CEB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9551E12AC1995E00670CEB /* AppDelegate.swift */; };
 		4D9551E42AC1995E00670CEB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9551E32AC1995E00670CEB /* SceneDelegate.swift */; };
 		4D9551E62AC1995E00670CEB /* ImagesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9551E52AC1995E00670CEB /* ImagesListViewController.swift */; };
@@ -62,6 +63,7 @@
 		4D3A88672B0B91C20048BFE4 /* OAuth2Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuth2Service.swift; sourceTree = "<group>"; };
 		4D3A88692B0B927A0048BFE4 /* OAuth2TokenStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuth2TokenStorage.swift; sourceTree = "<group>"; };
 		4D3A886C2B0CC3890048BFE4 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
+		4D5740032B13855200398E36 /* CookieService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookieService.swift; sourceTree = "<group>"; };
 		4D9551DE2AC1995E00670CEB /* ImageFeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageFeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D9551E12AC1995E00670CEB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4D9551E32AC1995E00670CEB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -224,6 +226,7 @@
 				4DD287E02B0E6BF500886D00 /* ProfileService.swift */,
 				4DFAFC1C2B0ECE7C0074A128 /* ProfileImageService.swift */,
 				4DCB1E212B0FDC1100EE94C6 /* ImageListService.swift */,
+				4D5740032B13855200398E36 /* CookieService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -423,6 +426,7 @@
 				4DB951E42AC2FD50007505E2 /* SingleImageViewController.swift in Sources */,
 				4D3A88682B0B91C20048BFE4 /* OAuth2Service.swift in Sources */,
 				4D9551E42AC1995E00670CEB /* SceneDelegate.swift in Sources */,
+				4D5740042B13855200398E36 /* CookieService.swift in Sources */,
 				4DD287EE2B0E9CDF00886D00 /* AlertPresenter.swift in Sources */,
 				4DD287E12B0E6BF500886D00 /* ProfileService.swift in Sources */,
 				4DFAFC1D2B0ECE7C0074A128 /* ProfileImageService.swift in Sources */,

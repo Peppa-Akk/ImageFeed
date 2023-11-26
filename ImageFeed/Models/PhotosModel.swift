@@ -34,3 +34,11 @@ struct UrlsResult: Codable {
     let full: String
     let thumb: String
 }
+
+struct LikeResult: Codable {
+    let isLike: Bool
+    
+    enum CodingKeys: String, CodingKey {
+        case isLike = "liked_by_user"
+    }
+}

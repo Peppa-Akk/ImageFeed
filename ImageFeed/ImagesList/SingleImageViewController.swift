@@ -4,13 +4,15 @@ import UIKit
 final class SingleImageViewController: UIViewController {
     
     //MARK: - Variables
-    var image: UIImage! {
+    var image: UIImage? {
         didSet {
             guard isViewLoaded else { return }
             imageView.image = image
+            guard let image else { return }
             rescaleAndCenterImageInScrollView(image: image)
         }
     }
+    var largeImageURL: URL?
     
     //MARK: - Outlets
     @IBOutlet var scrollView: UIScrollView!
@@ -31,10 +33,14 @@ final class SingleImageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         imageView.image = image
-        rescaleAndCenterImageInScrollView(image: image)
         
         scrollView.minimumZoomScale = 0.1
         scrollView.maximumZoomScale = 1.25
+        
+        loadImage()
+        
+        guard let image else { return }
+        rescaleAndCenterImageInScrollView(image: image)
     }
     
     //MARK: Funtions
@@ -61,5 +67,24 @@ final class SingleImageViewController: UIViewController {
 extension SingleImageViewController: UIScrollViewDelegate {
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         imageView
+    }
+}
+
+// MARK: - loadImage
+extension SingleImageViewController {
+    func loadImage() {
+        UIBlockingProgressHUD.show()
+        guard let image = largeImageURL else { return }
+        imageView.kf.setImage(with: image) { [weak self] imageResult in
+            UIBlockingProgressHUD.dismiss()
+            guard let self else { return }
+            switch imageResult {
+            case .success(let result):
+                self.image = result.image
+                self.rescaleAndCenterImageInScrollView(image: result.image)
+            case .failure:
+                break
+            }
+        }
     }
 }

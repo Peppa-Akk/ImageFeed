@@ -64,6 +64,15 @@ final class ProfileViewController: UIViewController {
         self.descriptionLabel.text = profile.bio
         self.loginNameLabel.text = profile.loginName
     }
+    
+    @objc
+    private func logoutButtonClicked() {
+        CookieService.clean()
+        OAuth2TokenStorage().cleanToken()
+        
+        let vc = SplashViewController()
+        self.show(vc, sender: self)
+    }
 }
 
 // MARK: - Extension UI-elements in code
@@ -72,6 +81,7 @@ extension ProfileViewController {
     func addButtonOnView(_ button: UIButton) {
         button.setImage(UIImage(named: "logout_button.png"), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(self.logoutButtonClicked), for: .touchUpInside)
         view.addSubview(button)
         
         NSLayoutConstraint.activate([
@@ -119,23 +129,50 @@ extension ProfileViewController {
         view.backgroundColor = UIColor(red: 26/255, green: 27/255, blue: 34/255, alpha: 1)
         
         addButtonOnView(logoutButton)
+        let gradient = CAGradientLayer()
+        var animationLayers = Set<CALayer>()
+        gradient.frame = avatarImageView.bounds
+        gradient.locations = [0, 0.1, 0.3]
+        gradient.colors = [
+            UIColor(red: 0.682, green: 0.686, blue: 0.706, alpha: 1).cgColor,
+            UIColor(red: 0.531, green: 0.533, blue: 0.553, alpha: 1).cgColor,
+            UIColor(red: 0.431, green: 0.433, blue: 0.453, alpha: 1).cgColor
+        ]
+        gradient.startPoint = CGPoint(x: 0, y: 0.5)
+        gradient.endPoint = CGPoint(x: 1, y: 0.5)
+        gradient.cornerRadius = 35
+        gradient.masksToBounds = true
+        let gradientChangeAnimation = CABasicAnimation(keyPath: "locations")
+        gradientChangeAnimation.duration = 1.0
+        gradientChangeAnimation.repeatCount = .infinity
+        gradientChangeAnimation.fromValue = [0, 0.1, 0.3]
+        gradientChangeAnimation.toValue = [0, 0.8, 1]
+        gradient.add(gradientChangeAnimation, forKey: "locationsChange")
+        avatarImageView.layer.addSublayer(gradient)
+        
         addImageViewOnView(avatarImageView)
         addLabelOnView(nameLabel, with: "Екатерина Новикова",
                        by: [nameLabel.leadingAnchor.constraint(equalTo: avatarImageView.leadingAnchor),
                             nameLabel.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 8),
                             nameLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)],
                        red: 255, green: 255, blue: 255, font: UIFont.boldSystemFont(ofSize: 23))
+        gradient.frame = nameLabel.bounds
+        nameLabel.layer.addSublayer(gradient)
 
         addLabelOnView(loginNameLabel, with: "@ekaterina_nov",
                        by: [loginNameLabel.leadingAnchor.constraint(equalTo: avatarImageView.leadingAnchor),
                             loginNameLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 8),
                             loginNameLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)],
                        red: 174, green: 175, blue: 180, font: UIFont.systemFont(ofSize: 13))
+        gradient.frame = loginNameLabel.bounds
+        loginNameLabel.layer.addSublayer(gradient)
 
         addLabelOnView(descriptionLabel, with: "Hello, world!",
                        by: [descriptionLabel.leadingAnchor.constraint(equalTo: avatarImageView.leadingAnchor),
                             descriptionLabel.topAnchor.constraint(equalTo: loginNameLabel.bottomAnchor, constant: 8),
                             descriptionLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)],
                        red: 255, green: 255, blue: 255, font: UIFont.systemFont(ofSize: 13))
+        gradient.frame = descriptionLabel.bounds
+        descriptionLabel.layer.addSublayer(gradient)
     }
 }
