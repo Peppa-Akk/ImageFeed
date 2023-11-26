@@ -17,7 +17,7 @@ final class ImagesListViewController: UIViewController {
     private var imageServiceObserver: NSObjectProtocol?
     private var alertPresenter: AlertPresenter?
     
-    private let ShowSingleImageSegueIdentifier = "ShowSingleImage"
+    private let showSingleImageSegueIdentifier = "ShowSingleImage"
     private lazy var dateFormatter: DateFormatter = {
             let formatter = DateFormatter()
             formatter.dateFormat = "dd MMMM yyyy"
@@ -51,19 +51,24 @@ final class ImagesListViewController: UIViewController {
             cell.cellImage.kf.indicatorType = .activity
             cell.cellImage.kf.setImage(with: url, placeholder: placeholderImage)
         }
-        //set date
-        let textDate = dateFormatter.string(from: photo.createdAt ?? Date())
-        cell.dateLabel.text = textDate
-        
+        // set like
         let likedImage = photo.isLiked ? UIImage(named: "like_button_on") : UIImage(named: "like_button_off")
         cell.likeButton.setImage(likedImage, for: .normal)
         
         cell.configureGradient()
+        
+        //set date
+        if let date = photo.createdAt {
+            let textDate = dateFormatter.string(from: date)
+            cell.dateLabel.text = textDate
+        } else {
+            cell.dateLabel.text = ""
+        }
     }
     
     // MARK: - Override Functions
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard segue.identifier == ShowSingleImageSegueIdentifier,
+        guard segue.identifier == showSingleImageSegueIdentifier,
               let viewController = segue.destination as? SingleImageViewController,
               let indexPath = sender as? IndexPath  else {
             super.prepare(for: segue, sender: sender)
@@ -117,7 +122,7 @@ extension ImagesListViewController: UITableViewDataSource {
 // MARK: - Extension UITableViewDelegate
 extension ImagesListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: ShowSingleImageSegueIdentifier, sender: indexPath)
+        performSegue(withIdentifier: showSingleImageSegueIdentifier, sender: indexPath)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

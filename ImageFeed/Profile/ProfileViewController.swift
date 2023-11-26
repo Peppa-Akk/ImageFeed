@@ -15,10 +15,12 @@ final class ProfileViewController: UIViewController {
     
     private var profileImageServiceObserver: NSObjectProtocol?
     private let profileImageService = ProfileImageService.shared
+    private var alertPresenter: AlertPresenter?
     
     // MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
+        alertPresenter?.delegate = self
         layout()
         
         if let url = profileImageService.avatarURL {
@@ -70,8 +72,36 @@ final class ProfileViewController: UIViewController {
         CookieService.clean()
         OAuth2TokenStorage().cleanToken()
         
-        let vc = SplashViewController()
-        self.show(vc, sender: self)
+        self.showAlert()
+    }
+}
+
+// MARK: - Alert
+extension ProfileViewController {
+    private func showAlert() {
+        let alert = UIAlertController(
+            title: "Пока, пока!",
+            message: "Уверены что хотите выйти?",
+            preferredStyle: .alert
+        )
+        
+        alert.addAction(UIAlertAction(
+            title: "Да",
+            style: .default,
+            handler: { [weak self] _ in
+                guard let self = self else { return }
+                let vc = SplashViewController()
+                self.show(vc, sender: self)
+            })
+        )
+        
+        alert.addAction(UIAlertAction(
+            title: "Нет",
+            style: .cancel,
+            handler: nil)
+        )
+        
+        present(alert, animated: true, completion: nil)
     }
 }
 

@@ -36,9 +36,5 @@ struct UrlsResult: Codable {
 }
 
 struct LikeResult: Codable {
-    let isLike: Bool
-    
-    enum CodingKeys: String, CodingKey {
-        case isLike = "liked_by_user"
-    }
+    let photo: PhotoResult
 }

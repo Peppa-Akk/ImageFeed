@@ -9,9 +9,10 @@ final class ImageListService {
     private var currentLikeTask: URLSessionTask?
     
     private (set) var photos: [Photo] = []
-    private var lastLoadedPage: Int?
+    private var lastLoadedPage: Int? = 1
     private let imagesPerPage = 10
-//    private var 
+    private var dateFormatter = ISO8601DateFormatter()
+//    private var
     
     func fetchPhotoNextPage() {
         assert(Thread.isMainThread)
@@ -62,7 +63,7 @@ final class ImageListService {
     func changeLike(
         photoId: String,
         isLike: Bool,
-        _ completion: @escaping (Result<Bool, Error>) -> Void
+        _ completion: @escaping (Result<Void, Error>) -> Void
     ) {
         assert(Thread.isMainThread)
         
@@ -83,30 +84,18 @@ final class ImageListService {
             guard let self = self else { return }
             self.currentLikeTask = nil
             switch result {
-            case .success(_):
-                if let index = self.photos.firstIndex(where: { $0.id == photoId }) {
-                    let photo = self.photos[index]
+            case .success(let photoResult):
+                let photo = photoResult.photo
+                guard let index = self.photos.firstIndex(where: { $0.id == photoId }) else { return }
+                let newPhoto = self.convert(by: photo)
+                self.photos[index] = newPhoto
                     
-                    let newPhoto = Photo(
-                        id: photo.id,
-                        size: photo.size,
-                        createdAt: photo.createdAt,
-                        welcomeDescription: photo.welcomeDescription,
-                        thumbImageURL: photo.thumbImageURL,
-                        largeImageURL: photo.largeImageURL,
-                        isLiked: !photo.isLiked
-                    )
-                    self.photos[index] = newPhoto
-                    
-                    NotificationCenter.default.post(
-                        name: ImageListService.didChangeNotification,
-                        object: self,
-                        userInfo: ["photos": photos]
-                    )
-                    
-                    let likeByUser = photo.isLiked
-                    completion(.success(likeByUser))
-                }
+                NotificationCenter.default.post(
+                    name: ImageListService.didChangeNotification,
+                    object: self,
+                    userInfo: ["photos": photos]
+                )
+                completion(.success(()))
             case .failure(let error):
                 completion(.failure(error))
             }
@@ -129,9 +118,7 @@ extension ImageListService {
         return Photo(
             id: photoResult.id,
             size: CGSize(width: Double(photoResult.width), height: Double(photoResult.height)),
-            createdAt: ISO8601DateFormatter().date(
-                from: photoResult.createdAt ?? DateFormatter().string(from: Date())
-            ),
+            createdAt: dateFormatter.date(from: photoResult.createdAt ?? ""),
             welcomeDescription: photoResult.descriptiom ?? "",
             thumbImageURL: photoResult.urls.thumb,
             largeImageURL: photoResult.urls.full,
