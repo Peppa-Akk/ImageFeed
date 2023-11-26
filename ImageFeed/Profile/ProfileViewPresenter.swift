@@ -8,7 +8,7 @@ protocol ProfileViewPresenterProtocol {
 }
 
 final class ProfileViewPresenter: ProfileViewPresenterProtocol {
-    var view: ProfileViewControllerProtocol?
+    weak var view: ProfileViewControllerProtocol?
     
     func viewDidLoad() {
         updateAvatar()
@@ -21,16 +21,15 @@ final class ProfileViewPresenter: ProfileViewPresenterProtocol {
     }
 }
 
-extension ProfileViewPresenterProtocol {
+extension ProfileViewPresenter {
     func updateAvatar() {
         guard let url = ProfileImageService.shared.avatarURL else { return }
-        
         view?.updateAvatar(url: url)
     }
     
     func updateProfie() {
         guard let profile = ProfileService.shared.profile else { return }
-        
         view?.updateProfileDetails(profile: profile)
     }
 }
+

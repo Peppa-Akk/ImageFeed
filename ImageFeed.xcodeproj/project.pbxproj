@@ -24,6 +24,7 @@
 		4DB3A38D2B13B865002F299D /* WebViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB3A38C2B13B865002F299D /* WebViewPresenter.swift */; };
 		4DB3A38F2B13C14D002F299D /* AuthHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB3A38E2B13C14D002F299D /* AuthHelper.swift */; };
 		4DB3A3912B13C740002F299D /* ProfileViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB3A3902B13C740002F299D /* ProfileViewPresenter.swift */; };
+		4DB3A3932B13E8E2002F299D /* ImageListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB3A3922B13E8E2002F299D /* ImageListPresenter.swift */; };
 		4DB898B22AD4890200A74EA8 /* AuthConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB898B12AD4890200A74EA8 /* AuthConfiguration.swift */; };
 		4DB898B72AD495CF00A74EA8 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB898B62AD495CF00A74EA8 /* AuthViewController.swift */; };
 		4DB951E22AC2D85A007505E2 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB951E12AC2D85A007505E2 /* ProfileViewController.swift */; };
@@ -84,6 +85,7 @@
 		4DB3A38C2B13B865002F299D /* WebViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewPresenter.swift; sourceTree = "<group>"; };
 		4DB3A38E2B13C14D002F299D /* AuthHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthHelper.swift; sourceTree = "<group>"; };
 		4DB3A3902B13C740002F299D /* ProfileViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewPresenter.swift; sourceTree = "<group>"; };
+		4DB3A3922B13E8E2002F299D /* ImageListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageListPresenter.swift; sourceTree = "<group>"; };
 		4DB898B12AD4890200A74EA8 /* AuthConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthConfiguration.swift; sourceTree = "<group>"; };
 		4DB898B62AD495CF00A74EA8 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
 		4DB951E12AC2D85A007505E2 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -203,6 +205,7 @@
 				4D95524D2AC2357200670CEB /* ImagesListCell.swift */,
 				4D9551E52AC1995E00670CEB /* ImagesListViewController.swift */,
 				4DB951E32AC2FD50007505E2 /* SingleImageViewController.swift */,
+				4DB3A3922B13E8E2002F299D /* ImageListPresenter.swift */,
 			);
 			path = ImagesList;
 			sourceTree = "<group>";
@@ -424,6 +427,7 @@
 				4DECCB572AD53588003C4146 /* WebViewController.swift in Sources */,
 				4D95524E2AC2357200670CEB /* ImagesListCell.swift in Sources */,
 				4DCB1E242B0FDCA800EE94C6 /* PhotosModel.swift in Sources */,
+				4DB3A3932B13E8E2002F299D /* ImageListPresenter.swift in Sources */,
 				4D3A886D2B0CC3890048BFE4 /* SplashViewController.swift in Sources */,
 				4DB898B22AD4890200A74EA8 /* AuthConfiguration.swift in Sources */,
 				4D3A886A2B0B927A0048BFE4 /* OAuth2TokenStorage.swift in Sources */,

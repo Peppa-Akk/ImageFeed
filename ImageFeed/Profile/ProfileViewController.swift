@@ -1,20 +1,13 @@
 import UIKit
 import Kingfisher
 
-//protocol WebViewControllerProtocol: AnyObject {
-//    var presenter: WebViewPresenterProtocol? { get set }
-//    func load(request: URLRequest)
-//    func setProgressValue(_ newValue: Float)
-//    func setProgressHidden(_ isHidden: Bool)
-//}
-
-protocol ProfileViewControllerProtocol {
+protocol ProfileViewControllerProtocol: AnyObject {
     var presenter: ProfileViewPresenterProtocol? { get set }
     func updateAvatar(url: URL)
     func updateProfileDetails(profile: Profile?)
 }
 
-final class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
+final class ProfileViewController: UIViewController & ProfileViewControllerProtocol {
     // MARK: - UI Varables
     private var avatarImageView = UIImageView()
     private var nameLabel = UILabel()
@@ -25,9 +18,9 @@ final class ProfileViewController: UIViewController, ProfileViewControllerProtoc
     // MARK: - Variables
     private let placeholderImage = UIImage(named: "person.crop.circle.fill")
     
+    var presenter: ProfileViewPresenterProtocol?
     private var profileImageServiceObserver: NSObjectProtocol?
     private let profileImageService = ProfileImageService.shared
-    var presenter: ProfileViewPresenterProtocol?
     
     // MARK: - viewDidLoad
     override func viewDidLoad() {
@@ -78,11 +71,42 @@ final class ProfileViewController: UIViewController, ProfileViewControllerProtoc
     @objc
     private func logoutButtonClicked() {
         presenter?.reset()
+        CookieService.clean()
+        OAuth2TokenStorage().cleanToken()
         
-        let vc = SplashViewController()
-        self.show(vc, sender: self)
+        self.showAlert()
     }
 }
+
+// MARK: - Alert
+extension ProfileViewController {
+    private func showAlert() {
+        let alert = UIAlertController(
+            title: "Пока, пока!",
+            message: "Уверены что хотите выйти?",
+            preferredStyle: .alert
+        )
+        
+        alert.addAction(UIAlertAction(
+            title: "Да",
+            style: .default,
+            handler: { [weak self] _ in
+                guard let self = self else { return }
+                let vc = SplashViewController()
+                self.show(vc, sender: self)
+            })
+        )
+        
+        alert.addAction(UIAlertAction(
+            title: "Нет",
+            style: .cancel,
+            handler: nil)
+        )
+        
+        present(alert, animated: true, completion: nil)
+    }
+}
+
 
 // MARK: - Extension UI-elements in code
 extension ProfileViewController {
