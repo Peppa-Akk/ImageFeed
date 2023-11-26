@@ -1,8 +1,20 @@
 import UIKit
 import Kingfisher
 
-final class ProfileViewController: UIViewController {
-    
+//protocol WebViewControllerProtocol: AnyObject {
+//    var presenter: WebViewPresenterProtocol? { get set }
+//    func load(request: URLRequest)
+//    func setProgressValue(_ newValue: Float)
+//    func setProgressHidden(_ isHidden: Bool)
+//}
+
+protocol ProfileViewControllerProtocol {
+    var presenter: ProfileViewPresenterProtocol? { get set }
+    func updateAvatar(url: URL)
+    func updateProfileDetails(profile: Profile?)
+}
+
+final class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
     // MARK: - UI Varables
     private var avatarImageView = UIImageView()
     private var nameLabel = UILabel()
@@ -15,15 +27,14 @@ final class ProfileViewController: UIViewController {
     
     private var profileImageServiceObserver: NSObjectProtocol?
     private let profileImageService = ProfileImageService.shared
+    var presenter: ProfileViewPresenterProtocol?
     
     // MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         layout()
         
-        if let url = profileImageService.avatarURL {
-            updateAvatar(url: url)
-        }
+        presenter?.viewDidLoad()
         
         profileImageServiceObserver = NotificationCenter.default.addObserver(
             forName: ProfileImageService.didChangeNotification,
@@ -32,13 +43,6 @@ final class ProfileViewController: UIViewController {
             using: { [weak self] notification in
                 self?.updateAvatar(notification: notification)
             })
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        guard let profile = ProfileService.shared.profile else { return }
-        
-        updateProfileDetails(profile: profile)
     }
     
     @objc
@@ -53,22 +57,27 @@ final class ProfileViewController: UIViewController {
         updateAvatar(url: url)
     }
     
-    private func updateAvatar(url: URL) {
+    func updateAvatar(url: URL) {
         avatarImageView.kf.indicatorType = .activity
-        let processor = RoundCornerImageProcessor(cornerRadius: 61)
-        avatarImageView.kf.setImage(with: url, placeholder: placeholderImage, options: [.processor(processor)])
+        avatarImageView.kf.setImage(with: url, placeholder: placeholderImage)
     }
     
-    private func updateProfileDetails(profile: Profile) {
-        self.nameLabel.text = profile.name
-        self.descriptionLabel.text = profile.bio
-        self.loginNameLabel.text = profile.loginName
+    func updateProfileDetails(profile: Profile?) {
+        if let profile {
+            nameLabel.text = profile.name
+            descriptionLabel.text = profile.bio
+            loginNameLabel.text = profile.loginName
+        } else {
+            nameLabel.text = ""
+            descriptionLabel.text = ""
+            loginNameLabel.text = ""
+            avatarImageView.image = placeholderImage
+        }
     }
     
     @objc
     private func logoutButtonClicked() {
-        CookieService.clean()
-        OAuth2TokenStorage().cleanToken()
+        presenter?.reset()
         
         let vc = SplashViewController()
         self.show(vc, sender: self)
@@ -107,7 +116,7 @@ extension ProfileViewController {
         ])
     }
     //MARK: Labels
-    func addLabelOnView(_ label: UILabel, 
+    func addLabelOnView(_ label: UILabel,
                         with text: String,
                         by arrayConstraints: [NSLayoutConstraint],
                         red: CGFloat, green: CGFloat, blue:
@@ -130,7 +139,6 @@ extension ProfileViewController {
         
         addButtonOnView(logoutButton)
         let gradient = CAGradientLayer()
-        var animationLayers = Set<CALayer>()
         gradient.frame = avatarImageView.bounds
         gradient.locations = [0, 0.1, 0.3]
         gradient.colors = [
