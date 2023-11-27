@@ -27,6 +27,7 @@ final class ProfileViewController: UIViewController & ProfileViewControllerProto
         super.viewDidLoad()
         layout()
         
+        logoutButton.accessibilityIdentifier = "logout button"
         presenter?.viewDidLoad()
         
         profileImageServiceObserver = NotificationCenter.default.addObserver(
@@ -86,6 +87,7 @@ extension ProfileViewController {
             message: "Уверены что хотите выйти?",
             preferredStyle: .alert
         )
+        alert.view.accessibilityIdentifier = "Bye bye!"
         
         alert.addAction(UIAlertAction(
             title: "Да",
@@ -96,6 +98,7 @@ extension ProfileViewController {
                 self.show(vc, sender: self)
             })
         )
+        alert.actions.first?.accessibilityIdentifier = "Yeas!"
         
         alert.addAction(UIAlertAction(
             title: "Нет",
